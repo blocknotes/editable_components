@@ -1,0 +1,12 @@
+<% if local_assigns[:container] %>
+  <div data-ec>
+    <% blocks = local_assigns[:container].current_blocks( params[:version] ) %>
+    <% if blocks %>
+      <div id="ec_blocks" <%= EditableComponents::Engine.edit_mode ? "data-ec-blocks=#{blocks.length}" : '' %>><%= yield blocks %></div>
+      <% if EditableComponents::Engine.edit_mode %>
+        <div data-ec-new-blocks></div>
+      <% end %>
+    <% end %>
+    <%= render( partial: 'editable_components/admin_toolbar', locals: { page: local_assigns[:container] } ) %>
+  </div>
+<% end %>

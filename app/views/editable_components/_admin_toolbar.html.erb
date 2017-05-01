@@ -1,0 +1,105 @@
+<% if EditableComponents::Engine.edit_mode && local_assigns[:page] %>
+  <!-- Modal dialogs -->
+  <div data-ec-dlg="options" class="c-overlay c-overlay--fullpage">
+    <div class="o-modal">
+      <div class="c-card">
+        <header class="c-card__header">
+          <h4 class="c-heading">Block {{ dlg_block_type }}</h4>
+        </header>
+        <div class="c-card__body">
+          <div v-for="block in sub_blocks" :data-ec-sub-block="block.block" :data-ec-destroy="block.destroy">
+            <div data-ec-dlg-buttons class="c-input-group">
+              <button class="c-button c-button--error" v-on:click="removeSubBlock( block.block )"><i data-ec-icon="icon-bin" title="Remove"></i></button>
+              <button class="c-button c-button--warning"><i data-ec-icon="icon-move-down" class="sortable" title="Move"></i></button>
+            </div>
+            <div v-for="item in block.items" is="edit-block">
+              <div v-if="item.input != 'file_image'" :data-ec-input="item.input" :data-ec-item="item.item" :data-ec-type="item.type" v-html="item.value"></div>
+              <img v-else :src="item.src" :data-ec-input="item.input" :data-ec-item="item.item" :data-ec-type="item.type" v-html="item.value"/>
+            </div>
+          </div>
+          <div v-for="(block, index) in new_sub_blocks" data-ec-new-sub-block>
+            New sub block
+            <button type="button" class="c-button c-button--error" v-on:click="cancelNewSubBlock(index)">
+              <i data-ec-icon="icon-bin"></i>
+            </button>
+          </div>
+        </div>
+        <footer class="c-card__footer">
+          <button v-show="dlg_block_container" type="button" class="c-button c-button--success" v-on:click="addSubBlock">
+            <i data-ec-icon="icon-plus"></i> add sub block
+          </button>
+          <button type="button" class="c-button c-button--error" v-on:click="removeBlock">
+            <i data-ec-icon="icon-bin"></i> remove block
+          </button>
+          <button type="button" class="c-button c-button--brand" v-on:click="dlgOptionsClose">
+            <i data-ec-icon="icon-floppy-disk"></i> done
+          </button>
+        </footer>
+      </div>
+    </div>
+  </div>
+  <div data-ec-dlg="preview" class="c-overlay c-overlay--fullpage">
+    <div class="o-modal">
+      <header class="c-card__header">
+        <button type="button" class="c-button c-button--close" onclick="ecMain.dlgPreviewClose()">×</button>
+      </header>
+      <div class="c-card__body"></div>
+    </div>
+  </div>
+  <div data-ec-dlg="menu" class="c-overlay c-overlay--fullpage"></div>
+  <!-- Toolbar -->
+  <ul data-ec-toolbar class="c-nav c-nav--inline c-nav--fixed c-nav--bottom">
+    <li class="c-nav__item">
+      <!-- <a class="c-link" href="/admin" title="Open admin interface">Admin</a> -->
+      Admin
+    </li>
+    <li class="c-nav__item" onclick="ecMain.showMenu('menu-preview')">
+      <i data-ec-icon="icon-mobile2" title="Open preview options"></i>
+      <ul class="c-card c-card--menu" data-ec-menu-dropup="menu-preview">
+        <li class="c-card__item" onclick="ecMain.dlgPreviewOpen('mobile')">Mobile</li>
+        <li class="c-card__item" onclick="ecMain.dlgPreviewOpen('tablet')">Tablet</li>
+      </ul>
+    </li>
+    <li class="c-nav__item item-menu-add" onclick="ecMain.showMenu('menu-add');">
+      <i data-ec-icon="icon-plus" title="Open add options"></i>
+      <ul class="c-card c-card--menu" data-ec-menu-dropup="menu-add">
+        <% EditableComponents::Block::block_types.each do |type| %>
+          <li class="c-card__item" v-on:click="addBlock('<%= type %>')">New <%= type %></li>
+        <% end %>
+      </ul>
+    </li>
+    <li class="c-nav__item c-nav__item--right last-item">
+      <button data-edit-button class="c-button" onclick="ecMain.setEditMode()" title="Edit components"><i data-ec-icon="icon-pencil"></i> edit</button>
+    </li>
+    <% page = local_assigns[:page] %>
+    <% model = page.class.to_s.underscore %>
+    <!-- <li class="c-nav__item c-nav__item--right">
+      <%= form_for page, url: EditableComponents::Engine::routes.url_helpers.ec_publish_path( model, page ), method: :post, as: :ec_cmp, namespace: 'ec' do |f| %>
+        <input type="hidden" name="version" value="<%= @version.to_i %>"/>
+        <%= button_tag( type: 'submit', class: 'c-button c-button--success', title: 'Publish', 'data-ec-menu-publish': '' ) do %>
+          <i data-ec-icon="icon-floppy-disk"></i> publish
+        <% end %>
+      <% end %>
+    </li> -->
+    <li class="c-nav__item c-nav__item--right">
+      <%= form_for page, url: EditableComponents::Engine::routes.url_helpers.ec_update_path( model, page ), method: :patch, as: :ec_cmp, namespace: 'ec', html: { 'data-ec-form': '', 'data-ec-model': model, 'v-cloak': '', 'v-on:submit': 'onSubmit( $event )' } do |f| %>
+        <input type="hidden" name="version" value="<%= @version.to_i %>"/>
+        <div data-ec-fields></div>
+        <input v-for="input in inputs" type="hidden" v-bind:name="input.name" v-bind:value="input.value"/>
+        <%= button_tag( type: 'submit', class: 'c-button c-button--info', title: 'Save changes', 'data-ec-menu-save': '' ) do %>
+          <i data-ec-icon="icon-floppy-disk"></i> save
+        <% end %>
+      <% end %>
+    </li>
+  </ul>
+  <script type="text/x-template" id="ec-block-buttons-template">
+    <div data-ec-block-buttons class="c-input-group">
+      <button class="c-button c-button--brand" v-on:click="openDialogOptions">
+        <i data-ec-icon="icon-pencil" title="Options"></i>
+      </button>
+      <button class="c-button c-button--warning">
+        <i class="sortable" data-ec-icon="icon-move-down" title="Reorder"></i>
+      </button>
+    </div>
+  </script>
+<% end %>

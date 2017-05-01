@@ -1,0 +1,5 @@
+class AddItemsTexts < ActiveRecord::Migration[5.0]
+  def change
+    add_column :editable_components_items, :data_text, :text
+  end
+end

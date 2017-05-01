@@ -1,0 +1,225 @@
+@font-face
+  font-family: 'icomoon'
+  font-style: normal
+  font-weight: normal
+  src: url('icomoon.eot?alv1ju')
+  src: url('icomoon.eot?alv1ju#iefix') format('embedded-opentype'), url('icomoon.ttf?alv1ju') format('truetype'), url('icomoon.woff?alv1ju') format('woff'), url('icomoon.svg?alv1ju#icomoon') format('svg')
+
+.c-field--choice
+  margin-top: 5px
+
+.noselect
+  -webkit-touch-callout: none
+  -webkit-user-select: none
+  -khtml-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none
+
+[data-ec-menu-publish], [data-ec-menu-save]
+  display: none
+
+[data-ec-editing]
+  padding-bottom: 55px
+  .modal a.close-modal
+    top: 0
+    right: 0
+
+[data-ec-editing='1']
+  [data-ec-block], [data-ec-sub-block]
+    box-shadow: inset 0 0 2px #468
+    min-height: 35px
+    position: relative
+  [data-ec-container=''] [data-ec-item], [data-ec-dlg] [data-ec-item]
+    background: repeating-linear-gradient( -45deg, #def, #def 10px, #f4f4f4 10px, #f4f4f4 20px )
+    box-shadow: inset 0 0 2px #789
+    cursor: pointer
+  [data-ec-item]
+    min-height: 15px
+  [data-ec-menu-publish], [data-ec-menu-save]
+    display: inline
+
+[data-ec-new-block], [data-ec-new-sub-block], [data-ec-newblk-dlg], [data-ec-newsubcmp]
+  background: #def
+  border: 1px dashed #789
+  font-style: italic
+  margin-top: 5px
+  padding: 8px
+  position: relative
+  text-align: center
+  [data-ec-icon]
+    margin: 0
+
+[data-ec-status]
+  color: #eee
+  padding: 6px 0
+  text-align: center
+
+[data-ec-form]
+  display: inline-block
+
+[data-ec-menu-dropup]
+  bottom: 100%
+  color: #444
+  display: none
+  position: absolute
+  width: 200px
+
+[data-ec-toolbar]
+  background: rgba(0, 0, 0, .75)
+  z-index: 1000
+  a
+    color: #fff
+    text-decoration: none
+  a:hover
+    background-color: transparent
+  .c-nav__item--right
+    padding-left: 5px
+    padding-right: 5px
+    &.last-item
+      margin-right: 10px
+  .c-button
+    margin-bottom: 4px
+  .c-card__item
+    line-height: initial
+  .item-menu-add
+    display: none
+
+[data-ec-btn-add]
+  float: right
+  font-size: 80%
+
+[data-ec-block-buttons], [data-ec-new-block] > button, [data-ec-new-sub-block] > button
+  padding: 2px 2px 1px 3px
+  position: absolute
+  right: 5px
+  top: 5px
+
+[data-ec-block-buttons] button
+  padding: 4px 4px 3px 5px
+
+[data-ec-new-block] > button
+  padding: 2px 2px 1px 3px
+
+[data-ec-btn-destroy], [data-ec-btn-cancel], [data-ec-btn-settings], .ec-btn-sort
+  border-radius: 20px
+  margin-top: 4px
+  padding: 4px 4px 5px 5px
+  position: absolute
+  text-shadow: 1px 1px #000
+  z-index: 999
+
+[data-ec-btn-destroy], [data-ec-btn-cancel]
+  background: #a00
+  color: #fff
+  cursor: no-drop
+  right: 28px
+
+[data-ec-btn-destroy]
+  display: none
+
+[data-ec-destroy='1']
+  opacity: 0.3
+
+[data-ec-btn-settings]
+  background: #e80
+  color: #fff
+  cursor: pointer
+  display: none
+  right: 52px
+
+.ec-btn-sort
+  background: #080
+  color: #fff
+  cursor: move
+  cursor: -webkit-grabbing
+  display: none
+  right: 4px
+
+// --- dialogs -------------------------------------------------------------- //
+[data-ec-dlg]
+  display: none
+
+[data-ec-dlg='preview']
+  .c-card__body
+    height: 100%
+    margin-top: 20px
+    padding: 0
+  .o-modal
+    height: 90%
+    padding: 0
+    &[data-ec-target='mobile']
+      max-width: 480px
+      iframe
+        width: 480px
+    &[data-ec-target='tablet']
+      max-width: 768px
+      iframe
+        width: 768px
+  iframe
+    border: 0 none
+    height: 100%
+
+[data-ec-dlg='options']
+  .o-modal
+    padding: 14px 12px
+    [data-ec-type='ItemImage']
+      vertical-align: middle
+      max-width: 200px
+      max-height: 150px
+    [data-ec-sub-block]
+      margin-bottom: 5px
+      position: relative
+  .c-card__footer
+    text-align: right
+
+[data-ec-dlg-buttons]
+  margin-top: 3px
+  position: absolute
+  right: 10px
+  font-size: 80%
+
+// --- icons ---------------------------------------------------------------- //
+[data-ec-icon]
+  font-family: 'icomoon' !important
+  speak: none
+  font-style: normal
+  font-weight: normal
+  font-variant: normal
+  text-transform: none
+  line-height: 1
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+[data-ec-icon='icon-pencil']:before
+  content: '\e905'
+[data-ec-icon='icon-image']:before
+  content: '\e90d'
+[data-ec-icon='icon-file-text2']:before
+  content: '\e926'
+[data-ec-icon='icon-mobile2']:before
+  content: '\e959'
+[data-ec-icon='icon-upload']:before
+  content: '\e961'
+[data-ec-icon='icon-floppy-disk']:before
+  content: '\e962'
+[data-ec-icon='icon-user']:before
+  content: '\e971'
+[data-ec-icon='icon-search']:before
+  content: '\e986'
+[data-ec-icon='icon-cog']:before
+  content: '\e994'
+[data-ec-icon='icon-bin']:before
+  content: '\e9ac'
+[data-ec-icon='icon-eye']:before
+  content: '\e9ce'
+[data-ec-icon='icon-eye-blocked']:before
+  content: '\e9d1'
+[data-ec-icon='icon-plus']:before
+  content: '\ea0a'
+[data-ec-icon='icon-move-down']:before
+  content: '\ea47'
+
+// -------------------------------------------------------------------------- //
+
+[v-cloak]
+  display: none

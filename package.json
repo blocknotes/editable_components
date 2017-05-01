@@ -1,0 +1,22 @@
+{
+  "name": "editable_components",
+  "version": "1.0.0",
+  "description": "editable_components",
+  "main": "index.js",
+  "repository": "https://blocknotes@bitbucket.org/blocknotes/editable_components.git",
+  "author": "Mat",
+  "license": "MIT",
+  "dependencies": {
+    "blaze": "^3.2.2",
+    "dragula": "^3.7.2",
+    "dropzone": "^4.3.0",
+    "jquery": "2",
+    "jquery-modal": "^0.8.0",
+    "medium-editor": "^5.23.0",
+    "purecss": "^0.6.2",
+    "remodal": "^1.1.1",
+    "sizzle": "^2.3.3",
+    "sortablejs": "^1.5.1",
+    "vue": "^2.2.6"
+  }
+}
