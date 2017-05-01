@@ -14,21 +14,21 @@ Goals:
 
 ![preview](preview.png)
 
-### Instructions
+### Install
 
-1. Add to the Gemfile: `gem 'editable_components'`
+- Add to the Gemfile: `gem 'editable_components'`
 
-2. Copy migrations (Rails 5.x syntax, in Rails 4.x use rake): `rails editable_components:install:migrations`
+- Copy migrations (Rails 5.x syntax, in Rails 4.x use rake): `rails editable_components:install:migrations`
 
-3. Apply them: `rake db:migrate`
+- Apply them: `rake db:migrate`
 
-4. Include the concern *Editable* to your model: `include EditableComponents::Concerns::Editable`
+- Include the concern *Editable* to your model: `include EditableComponents::Concerns::Editable`
 
-5. Add to your application layout (in head, ex. using ERB): `<%= stylesheet_link_tag( EditableComponents::Engine.css ) if EditableComponents::Engine.css %>`
+- Add to your application layout (in head, ex. using ERB): `<%= stylesheet_link_tag( EditableComponents::Engine.css ) if EditableComponents::Engine.css %>`
 
-6. Add to your application layout (before body closing): `<%= javascript_include_tag( EditableComponents::Engine.js ) if EditableComponents::Engine.js %>`
+- Add to your application layout (before body closing): `<%= javascript_include_tag( EditableComponents::Engine.js ) if EditableComponents::Engine.js %>`
 
-7. Add your blocks to the views (ex. in show):
+- Add your blocks to the views (ex. in show):
 ```erb
 <%= render layout: 'editable_components/blocks', locals: { container: @page } do |blocks| %>
   <% blocks.each do |block| %>
@@ -37,7 +37,7 @@ Goals:
 <% end %>
 ```
 
-8. Add some sample data (ex. Page model): `Page.first.create_block :text`
+- Add some sample data (ex. Page model): `Page.first.create_block :text`
 
 ##### Images
 
