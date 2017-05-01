@@ -9,9 +9,9 @@ Gem::Specification.new do |s|
   s.version     = EditableComponents::VERSION
   s.authors     = ["Mat"]
   s.email       = ["mat@blocknot.es"]
-  s.homepage    = "https://www.blocknot.es"
+  s.homepage    = "https://github.com/blocknotes/editable_components"
   s.summary     = "EditableComponents"
-  s.description = "EditableComponents"
+  s.description = "UI components editable from the front-end for Rails"
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
