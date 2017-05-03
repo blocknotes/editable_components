@@ -1,4 +1,4 @@
-# EditableComponents for Rails
+# EditableComponents for Rails [![Gem Version](https://badge.fury.io/rb/editable_components.svg)](https://badge.fury.io/rb/editable_components)
 
 A Ruby on Rails plugin to manage UI components editable from the front-end.
 
