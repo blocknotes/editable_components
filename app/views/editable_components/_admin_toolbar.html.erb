@@ -85,7 +85,6 @@
       <%= form_for page, url: EditableComponents::Engine::routes.url_helpers.ec_update_path( model, page ), method: :patch, as: :ec_cmp, namespace: 'ec', html: { 'data-ec-form': '', 'data-ec-model': model, 'v-cloak': '', 'v-on:submit': 'onSubmit( $event )' } do |f| %>
         <input type="hidden" name="version" value="<%= @version.to_i %>"/>
         <div data-ec-fields></div>
-        <input v-for="input in inputs" type="hidden" v-bind:name="input.name" v-bind:value="input.value"/>
         <%= button_tag( type: 'submit', class: 'c-button c-button--info', title: 'Save changes', 'data-ec-menu-save': '' ) do %>
           <i data-ec-icon="icon-floppy-disk"></i> save
         <% end %>

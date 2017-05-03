@@ -39,6 +39,37 @@ Goals:
 
 - Add some sample data (ex. Page model): `Page.first.create_block :text`
 
+### Config
+
+Edit the conf file: `config/initializers/editable_components.rb`
+
+```ruby
+conf = EditableComponents.config
+# Adds a new custom block
+conf[:ec_blocks][:custom] = {
+  name: 'Custom block',
+  items: {
+    int1: :item_integer,
+    int2: :item_integer,
+    a_float: :item_float
+  }
+}
+EditableComponents.config( { components: conf[:ec_blocks] } )
+```
+
+Create the new view blocks: `app/views/editable_components/_block_custom.html.erb`
+
+```erb
+<% if local_assigns[:block] %>
+  <% block = local_assigns[:block] %>
+  <div <%= block.editable %>>
+    1st number: <span class="num1"<%= block.props.integers[0].editable %>><%= block.props.integers[0] %></span>
+    - 2nd number: <span class="num2"<%= block.props.integers[1].editable %>><%= block.props.integers[1] %></span><br/>
+    A float: <span <%= block.props.float.editable %>><%= block.props.float %></span><br/>
+  </div>
+<% end %>
+```
+
 ##### Images
 
 To add support for images add CarrierWave gem to your Gemfile and execute: `rails generate uploader File`

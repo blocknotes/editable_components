@@ -2,6 +2,13 @@
 var ecMain = (function() {
   this.editing = false;
   return {
+    createInput( parent, name, value ) {
+      var el = document.createElement( 'input' );
+      el.setAttribute( 'type', 'hidden' );
+      el.setAttribute( 'name', name );
+      el.setAttribute( 'value', value );
+      parent.appendChild( el );
+    },
     dlgPreviewClose: function() {
       Sizzle( '[data-ec-toolbar]' )[0].style.display = 'block';
       Sizzle( '[data-ec-dlg="preview"]' )[0].style.display = 'none';
@@ -228,45 +235,43 @@ var ecVue = new Vue({
     onSubmit: function( event ) {
       // event.preventDefault();
 
-      var cmp = this;
-      this.inputs = [];
       // Update items
       Sizzle( '[data-ec-item]' ).forEach( function( el ) {
         var input = el.getAttribute( 'data-ec-input' );
         if( input != 'file' && input != 'file_image' ) {
-          cmp.inputs.push( { name: 'ec_cmp[' + el.getAttribute( 'data-ec-type' ) + '][' + el.attributes['data-ec-item'].value + ']', value: el.innerHTML } );
+          ecMain.createInput( Sizzle( '[data-ec-fields]' )[0], 'ec_cmp[' + el.getAttribute( 'data-ec-type' ) + '][' + el.attributes['data-ec-item'].value + ']', el.innerHTML );
         }
       });
       // Update positions
       var last = Sizzle( '[data-ec-block]' ).length;
       Sizzle( '[data-ec-block]' ).forEach( function( el ) {
-        cmp.inputs.push( { name: 'ec_cmp[Block][' + el.attributes['data-ec-block'].value + '][position]', value: last-- } );
+        ecMain.createInput( Sizzle( '[data-ec-fields]' )[0], 'ec_cmp[Block][' + el.attributes['data-ec-block'].value + '][position]', last-- );
         var last2 = Sizzle( '[data-ec-sub-block]', el ).length;
         if( last2 ) {
           Sizzle( '[data-ec-sub-block]', el ).forEach( function( el2 ) {
             var sid = el2.getAttribute( 'data-ec-sub-block' );
-            cmp.inputs.push( { name: 'ec_cmp[Block][' + sid + '][position]', value: last2-- } );
+            ecMain.createInput( Sizzle( '[data-ec-fields]' )[0], 'ec_cmp[Block][' + sid + '][position]', last2-- );
           });
         }
       });
       // New blocks
       var cnt = 0;
       Sizzle( '[data-ec-new-block]' ).forEach( function( el ) {
-        cmp.inputs.push( { name: 'ec_cmp[Block][0][_add][' + ( cnt++ ) + ']', value: el.getAttribute( 'data-ec-type' ) } );
+        ecMain.createInput( Sizzle( '[data-ec-fields]' )[0], 'ec_cmp[Block][0][_add][' + ( cnt++ ) + ']', el.getAttribute( 'data-ec-type' ) );
       });
       // New sub blocks
       Sizzle( '[data-ec-block][data-ec-new-blocks]' ).forEach( function( el ) {
         cnt = parseInt( el.getAttribute( 'data-ec-new-blocks' ) );
         for( var i = 0; i < cnt; i++ ) {
-          cmp.inputs.push( { name: 'ec_cmp[Block][' + el.getAttribute( 'data-ec-block' ) + '][_add][' + i + ']', value: el.getAttribute( 'data-ec-container' ) } );
+          ecMain.createInput( Sizzle( '[data-ec-fields]' )[0], 'ec_cmp[Block][' + el.getAttribute( 'data-ec-block' ) + '][_add][' + i + ']', el.getAttribute( 'data-ec-container' ) );
         }
       });
       // Remove blocks
       Sizzle( '[data-ec-block][data-ec-destroy="1"]' ).forEach( function( el ) {
-        cmp.inputs.push( { name: 'ec_cmp[Block][' + el.attributes['data-ec-block'].value + '][_destroy]', value: '1' } );
+        ecMain.createInput( Sizzle( '[data-ec-fields]' )[0], 'ec_cmp[Block][' + el.attributes['data-ec-block'].value + '][_destroy]', '1' );
       });
       Sizzle( '[data-ec-sub-block][data-ec-destroy="1"]' ).forEach( function( el ) {
-        cmp.inputs.push( { name: 'ec_cmp[Block][' + el.attributes['data-ec-sub-block'].value + '][_destroy]', value: '1' } );
+        ecMain.createInput( Sizzle( '[data-ec-fields]' )[0], 'ec_cmp[Block][' + el.attributes['data-ec-sub-block'].value + '][_destroy]', '1' );
       });
     },
     removeBlock: function() {

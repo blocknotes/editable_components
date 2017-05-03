@@ -9,7 +9,7 @@ module EditableComponents
         accepts_nested_attributes_for :ec_blocks, allow_destroy: true
 
         def create_block( type = :text, params = {} )
-          block = Block.new( _init: true, block_type: type )
+          block = Block.new( block_type: type )
           block.options = params[:options] if params[:options]
           block.validations = params[:validations] if params[:validations]
           ec_blocks << block

@@ -60,7 +60,7 @@ module EditableComponents
                     t = block.block_type.to_sym
                     add.keys.each do
                       if @@config[:ec_blocks][t] && @@config[:ec_blocks][t][:children_type]
-                        sub_block = EditableComponents::Block.new( parent: block, block_type: @@config[:ec_blocks][t][:children_type], version: version, _init: true )
+                        sub_block = EditableComponents::Block.new( parent: block, block_type: @@config[:ec_blocks][t][:children_type], version: version )
                         sub_block.save
                         # TODO: return errors
                       end
@@ -74,7 +74,7 @@ module EditableComponents
                 add.each do |index, new_type|
                   t = new_type.to_sym
                   # TODO: check if t is a valid block type
-                  EditableComponents::Block.new( parent: parent, block_type: t, version: version, _init: true ).save
+                  EditableComponents::Block.new( parent: parent, block_type: t, version: version ).save
                 end
               end
             end

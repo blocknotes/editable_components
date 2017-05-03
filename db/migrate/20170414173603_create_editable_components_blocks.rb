@@ -6,7 +6,6 @@ class CreateEditableComponentsBlocks < ActiveRecord::Migration[5.0]
       t.string :name, null: false, default: ''
       t.integer :position, null: false, default: 0
       t.boolean :published, null: false, default: true
-      t.boolean :_init, null: false, default: false
       t.string :options, null: false, default: '{}'
       t.string :validations, null: false, default: '{}'
       t.integer :parent_id

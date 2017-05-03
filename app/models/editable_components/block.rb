@@ -15,6 +15,7 @@ module EditableComponents
 
     # --- hooks -------------------------------------------------------------- #
     before_create :on_before_create
+    after_create :on_after_create
 
     # --- scopes ------------------------------------------------------------- #
     default_scope { order( position: :desc ) }
@@ -85,33 +86,6 @@ module EditableComponents
       @_items[name]
     end
 
-    def init
-      t = block_type.to_sym
-      if Block::block_types.include? t
-        init_items self, EditableComponents.config[:ec_blocks][t][:items]
-      end
-    end
-
-    def init_items( block, items )
-      items.each do |name, type|
-        t = type.to_sym
-        if type.to_s.start_with? 'item_'
-          c = 'EditableComponents::' + ActiveSupport::Inflector.camelize( t )
-          begin
-            model = c.constantize
-          rescue Exception => e
-            Rails.logger.error '[ERROR] EditableComponents - init_items: ' + e.message
-            model = false
-          end
-          block.items << model.new( name: name ).init if model
-        elsif Block::block_types.include? t.to_sym
-          cmp = Block.new( block_type: t, name: name )
-          block.ec_blocks << cmp
-          init_items( cmp, EditableComponents.config[:ec_blocks][t][:items] )
-        end
-      end if items
-    end
-
     def has_parent?
       parent.present?
     end
@@ -124,20 +98,22 @@ module EditableComponents
       parent.present? && parent_type == 'EditableComponents::Block'
     end
 
+    def on_after_create
+      # TODO: validates type before creation!
+      t = self.block_type.to_sym
+      Block::init_items( self, EditableComponents.config[:ec_blocks][t][:items] ) if Block::block_types.include?( t )
+    end
+
     def on_before_create
-      if self._init
-        self._init = false
-        if self.name.blank?
-          names = parent.ec_blocks.map &:name
-          i = 0
-          while( ( i += 1 ) < 1000 )  # Search an empty group
-            unless names.include? "#{block_type}-#{i}"
-              self.name = "#{block_type}-#{i}"
-              break
-            end
+      if self.name.blank?
+        names = parent.ec_blocks.map &:name
+        i = 0
+        while( ( i += 1 ) < 1000 )  # Search an empty group
+          unless names.include? "#{block_type}-#{i}"
+            self.name = "#{block_type}-#{i}"
+            break
           end
         end
-        init
       end
     end
 
@@ -171,6 +147,24 @@ module EditableComponents
 
     def self.block_types
       @@block_types ||= EditableComponents.config[:ec_blocks].keys
+    end
+
+    def self.init_items( block, items )
+      items.each do |name, type|
+        t = type.to_sym
+        if type.to_s.start_with? 'item_'
+          c = 'EditableComponents::' + ActiveSupport::Inflector.camelize( t )
+          begin
+            model = c.constantize
+          rescue Exception => e
+            Rails.logger.error '[ERROR] EditableComponents - init_items: ' + e.message
+            model = false
+          end
+          block.items << model.new( name: name ).init if model
+        elsif Block::block_types.include? t.to_sym
+          block.ec_blocks << ( cmp = Block.new( block_type: t, name: name ) )
+        end
+      end if items
     end
   end
 end
