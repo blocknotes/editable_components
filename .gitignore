@@ -8,3 +8,5 @@ test/dummy/tmp/
 
 _misc/
 node_modules/
+
+config/database.yml

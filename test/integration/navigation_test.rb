@@ -1,8 +1,13 @@
+require 'active_record'
+require 'amoeba'
 require 'test_helper'
 
-class NavigationTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
-end
+require 'pry'
 
+class NavigationTest < ActionDispatch::IntegrationTest
+  test "signs me in" do
+    visit '/'
+    binding.pry
+    # expect(page).to have_content 'Success'
+  end
+end

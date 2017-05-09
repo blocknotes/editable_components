@@ -19,4 +19,9 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "rails", ">= 4.2"
   s.add_runtime_dependency "amoeba", "~> 3.0.0", '>= 3.0.0'
   # s.add_dependency "mongoid", "~> 6.0.3"
+
+  s.add_development_dependency 'activerecord'
+  s.add_development_dependency 'capybara'
+  s.add_development_dependency 'mysql2'
+  s.add_development_dependency 'pry'
 end
