@@ -16,7 +16,12 @@ Goals:
 
 ### Install
 
-- Add to the Gemfile: `gem 'editable_components'`
+- Add to the Gemfile:
+
+```ruby
+gem 'amoeba'
+gem 'editable_components'
+```
 
 - Copy migrations (Rails 5.x syntax, in Rails 4.x use rake): `rails editable_components:install:migrations`
 
@@ -27,6 +32,10 @@ Goals:
 - Add to your application layout (in head, ex. using ERB): `<%= stylesheet_link_tag( EditableComponents::Engine.css ) if EditableComponents::Engine.css %>`
 
 - Add to your application layout (before body closing): `<%= javascript_include_tag( EditableComponents::Engine.js ) if EditableComponents::Engine.js %>`
+
+- Add to routes: `mount EditableComponents::Engine => '/components'`
+
+- Add to your controller (ex. in _show_ method): `EditableComponents::Engine.edit_mode = !params[:preview]`
 
 - Add your blocks to the views (ex. in show):
 ```erb
