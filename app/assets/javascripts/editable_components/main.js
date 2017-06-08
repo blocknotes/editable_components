@@ -2,7 +2,7 @@
 var ecMain = (function() {
   this.editing = false;
   return {
-    createInput( parent, name, value ) {
+    createInput: function( parent, name, value ) {
       var el = document.createElement( 'input' );
       el.setAttribute( 'type', 'hidden' );
       el.setAttribute( 'name', name );
