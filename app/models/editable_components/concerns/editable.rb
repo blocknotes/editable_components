@@ -5,14 +5,16 @@ module EditableComponents
 
       included do
         # embeds_many :ec_blocks, as: :parent, cascade_callbacks: true, order: :position.desc, class_name: 'EditableComponents::Block'
-        has_many :ec_blocks, as: :parent, foreign_key: 'parent_id', class_name: Block.to_s
+        has_many :ec_blocks, as: :parent, dependent: :destroy, foreign_key: 'parent_id', class_name: Block.to_s
         accepts_nested_attributes_for :ec_blocks, allow_destroy: true
 
         def create_block( type = :text, params = {} )
           block = Block.new( block_type: type )
+          block.name = params[:name] if params[:name]
           block.options = params[:options] if params[:options]
           block.validations = params[:validations] if params[:validations]
           ec_blocks << block
+          Block::init_items block, params[:schema] if params[:schema]
           block
         end
 

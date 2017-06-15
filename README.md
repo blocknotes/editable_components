@@ -83,6 +83,10 @@ Create the new view blocks: `app/views/editable_components/_block_custom.html.er
 
 To add support for images add CarrierWave gem to your Gemfile and execute: `rails generate uploader File`
 
+##### Custom blocks
+
+To create a "free form" block just use: `Page.first.create_block :intro, name: 'IntroBlock', schema: { intro: :item_string, subtitle: :item_string }`
+
 ### Notes
 
 - This is not a complete replacement for an admin interface but it could improve the usability of a CMS software or content editor

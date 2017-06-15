@@ -8,8 +8,8 @@ module EditableComponents
 
     # --- relations ---------------------------------------------------------- #
     belongs_to :parent, polymorphic: true
-    has_many :ec_blocks, as: :parent, foreign_key: 'parent_id', class_name: 'Block'
-    has_many :items
+    has_many :ec_blocks, as: :parent, dependent: :destroy, foreign_key: 'parent_id', class_name: 'Block'
+    has_many :items, dependent: :destroy
     accepts_nested_attributes_for :ec_blocks, allow_destroy: true
     accepts_nested_attributes_for :items
 
