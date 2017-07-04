@@ -18,7 +18,7 @@ module EditableComponents
     after_create :on_after_create
 
     # --- scopes ------------------------------------------------------------- #
-    default_scope { order( position: :desc ) }
+    default_scope { order( :position ) }
     scope :published, -> { where( published: true ) unless EditableComponents::Engine.edit_mode }
     scope :with_nested, -> { includes( :items, ec_blocks: :items ) }
 
