@@ -10,7 +10,7 @@
     "blaze": "^3.2.2",
     "dragula": "^3.7.2",
     "dropzone": "^4.3.0",
-    "jquery": "2",
+    "jquery": "^2.2.4",
     "jquery-modal": "^0.8.0",
     "medium-editor": "^5.23.0",
     "purecss": "^0.6.2",
