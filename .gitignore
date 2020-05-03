@@ -10,3 +10,6 @@ _misc/
 node_modules/
 
 config/database.yml
+
+Gemfile.lock
+yarn.lock
